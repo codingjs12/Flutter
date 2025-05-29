@@ -38,6 +38,27 @@ class _ToDoListExState extends State<ToDoListEx> {
     });
   }
 
+  void deleteToDo(int index) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text("삭제"),
+        content : Text("정말 삭제 하실?"),
+        actions : [
+          TextButton(onPressed: (){
+            setState(() {
+              list.removeAt(index);
+            });
+            Navigator.of(context).pop();
+          }, child: Text("삭제")),
+          TextButton(onPressed: (){
+            Navigator.of(context).pop();
+          }, child: Text("취소"),)
+        ]
+      )
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,29 +109,7 @@ class _ToDoListExState extends State<ToDoListEx> {
                       }
                     ),
                     trailing: IconButton(
-                      onPressed: () => showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text("삭제 알림"),
-                            content: Text("삭제 하실?"),
-                            actions: [
-                              TextButton(
-                                onPressed: (){
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("삭제"),
-                              ),
-                              TextButton(
-                                onPressed: (){
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text("취소"),
-                              ),
-                            ],
-                          );
-                        }
-                      ),
+                      onPressed: () => deleteToDo(index),
                       icon: Icon(Icons.delete)
                     ),
                   );
@@ -122,5 +121,3 @@ class _ToDoListExState extends State<ToDoListEx> {
     );
   }
 }
-
-
